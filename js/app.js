@@ -1,3 +1,6 @@
+let curremPage = 1;
+let totalPage = 0;
+let itemsPerPage = 12;
 const typeColors = {
     normal: '#A8A77A',
     fire: '#EE8130',
@@ -53,7 +56,7 @@ document.getElementById('search-button').addEventListener('click', () => {
             const pokemon = document.getElementById('pokemon');
             pokemon.innerHTML = `
                 <h2>${data.name}</h2>
-                <img src="${data.sprites.front_default}" alt="${data.name}">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${data.id}.gif" alt="${data.name}">
                 <p>Altura: ${data.height}</p>
                 <p>Peso: ${data.weight}</p>
             `;
@@ -64,54 +67,71 @@ document.getElementById('search-button').addEventListener('click', () => {
         });
 });
 
-
 async function mostrarPokem() {
-    let url = 'https://pokeapi.co/api/v2/pokemon?limit=510';
+    const offset = (curremPage - 1) * itemsPerPage;
+    const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${itemsPerPage}`;
     try {
-        let response = await fetch(url);
-        let responseJson = await response.json();
-        let pokemonList = document.getElementById('pokemon-list');
+        const response = await fetch(url);
+        const responseJson = await response.json();
+        const pokemonList = document.getElementById('pokemon-list');
+        
         pokemonList.innerHTML = ''; 
         
-        responseJson.results.forEach((pokemon, index) => {
+        totalPage = Math.ceil(responseJson.count / itemsPerPage);
+
+        responseJson.results.forEach(pokemon => {
             fetch(pokemon.url)
                 .then(response => response.json())
                 .then(data => {
                     const pokemonDiv = document.createElement('div');
                     pokemonDiv.className = 'pokemon-container';
                     const types = data.types.map(typeInfo => typeInfo.type.name);
-                    
-                    
+
                     const typesHtml = types.map(type => {
                         const color = typeColors[type] || '#777'; 
                         return `<span class="pokemon-type" style="background-color: ${color};">${type}</span>`;
                     }).join(' ');
 
                     pokemonDiv.innerHTML = `
-                    <div class = "lista_contenedor">
-                    <h3>${data.name.toUpperCase()}</h3>
-                        <img src="${data.sprites.front_default}" alt="${data.name}">
-                        <div>${typesHtml}</div>
-                    </div
-                    
+                        <div class="lista_contenedor">
+                        <h3>ID: ${data.id}</h3>
+                            <h3>${data.name.toUpperCase()}</h3>
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${data.id}.gif" alt="${data.name}">
+                            <div>${typesHtml}</div>
+                        </div>
                     `;
+                    
                     pokemonDiv.addEventListener('click', () => {
                         mostrarPokemonDetalle(data);
                     });
+
                     pokemonList.appendChild(pokemonDiv);
                 });
         });
+
+        document.getElementById('pageInfo').textContent = `Page ${curremPage} of ${totalPage}`;
     } catch (error) {
         console.error(error);
     }
 }
-    
 
+document.getElementById('previous-button').addEventListener('click', () => {
+    if (curremPage > 1) {
+        curremPage--;
+        mostrarPokem();
+    }
+});
+document.getElementById('next-button').addEventListener('click', () => {
+    if (curremPage < totalPage) {
+        curremPage++;
+        mostrarPokem();
+    }
+})
 function mostrarPokemonDetalle(data) {
     const pokemon = document.getElementById('pokemon');
     pokemon.innerHTML = `
         <h2>${data.name.toUpperCase()}</h2>
-        <img src="${data.sprites.front_default}" alt="${data.name}">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${data.id}.gif" alt="${data.name}">
         <p>Altura: ${data.height}</p>
         <p>Peso: ${data.weight}</p>
         <p>Habilidades: ${data.abilities.map(ability => ability.ability.name).join(', ')}</p>
@@ -173,10 +193,6 @@ document.getElementById('back-button').addEventListener('click', () => {
 
 
 
-
-mostrarPokem();
-
-
 document.getElementById('pokemon-type-selector').addEventListener('change', function(event) {
     let selectedType = event.target.value;
     mostrarPokemPorTipo(selectedType);
@@ -187,21 +203,18 @@ async function mostrarPokemPorTipo(tipo) {
         let response = await fetch(url);
         let responseJson = await response.json();
         let pokemonList = document.getElementById('pokemon-list');
-        pokemonList.innerHTML = ''; // Limpiar la lista antes de agregar nuevos elementos
+        pokemonList.innerHTML = ''; 
         
         let pokemonDetailsPromises = responseJson.pokemon.map(pokemonEntry => 
             fetch(pokemonEntry.pokemon.url).then(response => response.json())
         );
         
-        
         let pokemonDetails = await Promise.all(pokemonDetailsPromises);
         
         pokemonDetails.forEach(data => {
             const types = data.types.map(typeInfo => typeInfo.type.name);
-            
-            // Generar HTML para los tipos
             const typesHtml = types.map(type => {
-                const color = typeColors[type] || '#777'; // Usa color por defecto si no se encuentra el tipo
+                const color = typeColors[type] || '#777'; 
                 return `<span class="pokemon-type" style="background-color: ${color};">${type}</span>`;
             }).join(' ');
 
@@ -209,8 +222,9 @@ async function mostrarPokemPorTipo(tipo) {
             pokemonDiv.className = 'pokemon-container';
             pokemonDiv.innerHTML = `
                 <div class="lista_contenedor">
-                    <h3>${data.name}</h3>
-                    <img src="${data.sprites.front_default}" alt="${data.name}">
+                    <h3>ID: ${data.id}</h3>
+                    <h3>${data.name.toUpperCase()}</h3>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${data.id}.gif" class="image">
                     <div>${typesHtml}</div>
                 </div>
             `;

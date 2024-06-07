@@ -69,11 +69,13 @@ h1 {
 }
 
 .pokemon-container {
-    width: 150px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
+    border: 1px solid #ccc; 
+    padding: 20px;
+    border-radius: 10px; 
+    text-align: center; 
+    background-color: #f9f9f9; 
+    width: 200px; 
+    height: 300px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -113,4 +115,26 @@ h1 {
     width: 100px;
     height: auto;
     border-radius: 10px;
+}
+.lista_contenedor img {
+    width: 100px; 
+    height: 100px; 
+}
+
+.lista_contenedor .imagen {
+    width: 100px; 
+    height: 100px; 
+}
+#previous-button, #next-button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #1b96cf;
+    color: #fff;
+}
+#previous-button:hover, #next-button:hover {
+    background-color: #afc8df;
 }
