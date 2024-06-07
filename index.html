@@ -1,17 +1,44 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="./styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
     <title>Pokemon</title>
 </head>
-<body>
+<body onload="mostrarPokem()" class="row">
     <h1>Pokemon</h1>
+    <select id="search-type">
+        <option value="name">Nombre</option>
+        <option value="id">ID</option>
+    </select>
     <input type="text" id="search" placeholder="Buscar pokemon">
     <button id="search-button">Buscar</button>
+    <div id="error-message"></div>
     <div id="pokemon"></div>
-    <script src="app.js"></script>
+    <select id="pokemon-type-selector">
+        <option value="normal">Normal</option>
+        <option value="fire">Fuego</option>
+        <option value="water">Agua</option>
+        <option value="electric">Eléctrico</option>
+        <option value="grass">Planta</option>
+        <option value="ice">Hielo</option>
+        <option value="fighting">Lucha</option>
+        <option value="poison">Veneno</option>
+        <option value="ground">Tierra</option>
+        <option value="flying">Volador</option>
+        <option value="psychic">Psíquico</option>
+        <option value="bug">Bicho</option>
+        <option value="rock">Roca</option>
+        <option value="ghost">Fantasma</option>
+        <option value="dragon">Dragón</option>
+        <option value="dark">Siniestro</option>
+        <option value="steel">Acero</option>
+        <option value="fairy">Hada</option>
+    </select>
+    <div id="pokemon-list"></div>
+    <button id="back-button" style="display: none;">Regresar</button>
+    <script src="./js/app.js"></script>
+    
 </body>
 </html>

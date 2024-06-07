@@ -1,43 +1,116 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: center;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px;
 }
 
 h1 {
-    margin: 1rem 0;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ffcb05;
+    text-shadow: 2px 2px #2a75bb;
 }
 
-input {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-}
-
-button {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    background-color: #007bff;
-    color: white;
+#search-type, #search, #search-button, #pokemon-type-selector, #back-button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 1em;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
+#search-type, #pokemon-type-selector {
+    background-color: #2a75bb;
+    color: #fff;
+}
+
+#search {
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#search-button, #back-button {
+    background-color: #ffcb05;
+    color: #2a75bb;
+    cursor: pointer;
+}
+
+#search-button:hover, #back-button:hover {
+    background-color: #2a75bb;
+    color: #ffcb05;
+}
+
+#error-message {
+    color: red;
+    font-weight: bold;
+}
+
 #pokemon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1rem 0;
+    margin-top: 20px;
 }
 
-img {
+#pokemon img {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+
+#pokemon-list {
+    gap: 20px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 0.1fr); 
+    justify-content: center;
+}
+
+.pokemon-container {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-container:hover {
+    transform: scale(1.05);
+}
+
+.evolution-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.pokemon-container img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.pokemon-type {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: capitalize;
+    
+}
+
+.evolution-container {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.evolution-container img {
     width: 100px;
-    height: 100px;
-    margin: 0.5rem 0;
-}
-
-p {
-    margin: 0.5rem 0;
+    height: auto;
+    border-radius: 10px;
 }
