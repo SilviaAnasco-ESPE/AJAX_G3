@@ -109,7 +109,7 @@ async function mostrarPokem() {
                 });
         });
 
-        document.getElementById('pageInfo').textContent = `Page ${curremPage} of ${totalPage}`;
+        document.getElementById('pageInfo').textContent = `Página ${curremPage} of ${totalPage}`;
     } catch (error) {
         console.error(error);
     }
